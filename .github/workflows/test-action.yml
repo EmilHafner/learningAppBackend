@@ -21,6 +21,11 @@ jobs:
       - name: Run docker compose
         run: docker compose up -d
 
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          echo "Waiting for PostgreSQL to be ready..."
+          docker-compose exec db sh -c 'until pg_isready -h localhost -p 5432; do sleep 1; done'
+
       - name: Set up JDK 22
         uses: actions/setup-java@v2
         with:
@@ -32,20 +37,6 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
-        env:
-          DB_HOST: localhost
-          DB_NAME: postgres
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-          OPENAI_API_KEY: invalid
-          OPENAI_API_URL: https://api.openai.com
 
       - name: Run tests
         run: ./gradlew test
-        env:
-          DB_HOST: localhost
-          DB_NAME: postgres
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-          OPENAI_API_KEY: invalid
-          OPENAI_API_URL: https://api.openai.com
