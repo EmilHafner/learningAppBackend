@@ -32,6 +32,13 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+        env:
+          DB_HOST: localhost
+          DB_NAME: postgres
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          OPENAI_API_KEY: invalid
+          OPENAI_API_URL: https://api.openai.com
 
       - name: Run tests
         run: ./gradlew test
