@@ -36,7 +36,22 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
+        env:
+          DB_HOST: localhost
+          DB_NAME: postgres
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          OPENAI_API_KEY: invalid
+          OPENAI_API_URL: https://api.openai.com
         run: ./gradlew build
 
-      - name: Run tests
+
+      - name: Test with Gradle
+        env:
+          DB_HOST: localhost
+          DB_NAME: postgres
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          OPENAI_API_KEY: invalid
+          OPENAI_API_URL: https://api.openai.com
         run: ./gradlew test
